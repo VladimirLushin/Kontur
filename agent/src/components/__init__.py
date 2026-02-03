@@ -1,0 +1,3 @@
+"""
+Component diagram generation module
+"""
