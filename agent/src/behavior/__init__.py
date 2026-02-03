@@ -1,0 +1,3 @@
+"""
+Behavioral diagram generation module
+"""
