@@ -43,3 +43,27 @@ class RepoLoader:
                 if file.endswith('.java'):
                     java_files.append(os.path.join(root, file))
         return java_files
+    
+    def get_repo_info(self, repo_path: str) -> dict:
+        """Get information about the repository."""
+        try:
+            repo = git.Repo(repo_path)
+            
+            # Get repository information
+            info = {
+                'path': repo_path,
+                'is_dirty': repo.is_dirty(),
+                'active_branch': repo.active_branch.name if repo.active_branch else None,
+                'remotes': [remote.name for remote in repo.remotes],
+                'commits_count': len(list(repo.iter_commits())),
+                'last_commit': {
+                    'hexsha': repo.head.commit.hexsha,
+                    'message': repo.head.commit.message.strip(),
+                    'author': repo.head.commit.author.name,
+                    'date': repo.head.commit.committed_date,
+                } if repo.head.commit else None
+            }
+            
+            return info
+        except Exception as e:
+            raise Exception(f"Failed to get repository info: {e}")
