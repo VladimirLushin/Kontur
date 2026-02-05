@@ -1,12 +1,9 @@
-from langgraph.prebuilt import ToolExecutor
 from langgraph.graph import END, START, StateGraph
-from langgraph.prebuilt import ToolInvocation
-import json
 from typing import Dict, Any, List
 from src.models.project_description import ProjectAnalysisResult, ProjectMetaDescription
 from src.utils.java_analyzer import JavaAnalyzer
 from src.diagrams.generator import DiagramGenerator
-from src.utils.repo_loader import RepositoryLoader
+from src.utils.repo_loader import RepoLoader
 
 
 class ProjectAnalyzerAgent:
@@ -18,7 +15,7 @@ class ProjectAnalyzerAgent:
         self.api_key = api_key
         self.java_analyzer = JavaAnalyzer()
         self.diagram_generator = DiagramGenerator()
-        self.repo_loader = RepositoryLoader()
+        self.repo_loader = RepoLoader()
         
         # Инициализация LangGraph
         self.workflow = self._create_workflow()
@@ -34,8 +31,8 @@ class ProjectAnalyzerAgent:
             username = state.get("username")
             password = state.get("password")
             
-            loader = RepositoryLoader(username=username, password=password)
-            repo_path = loader.clone_repository(repo_url)
+            loader = RepoLoader(username=username, password=password)
+            repo_path = loader.clone_repo(repo_url)
             
             return {"repo_path": repo_path, "repo_info": loader.get_repo_info(repo_path)}
         
