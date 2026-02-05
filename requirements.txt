@@ -1,0 +1,17 @@
+langgraph==0.2.14
+langchain
+langchain-community
+pydantic
+requests
+gitpython
+pyyaml
+tiktoken
+langchain-openai
+langchain-core
+python-dotenv
+jinja2
+pygithub
+plantuml
+javalang
+openai
+graphviz
